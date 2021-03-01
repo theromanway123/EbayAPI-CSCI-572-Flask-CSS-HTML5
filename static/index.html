@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./resources/css/index.css">
+
+</head>
+<body>
+    <table class="tabletop" id="para">
+        <tr>
+            <th><a href="https://www.ebay.com/"><img src="./resources/images/eBayLogo.png" alt="" class="ebay_logo"></a></th>
+            <th><h1 class="shop">Shopping</h1></td>
+        </tr>
+    </table>
+
+    <form id="form_id" onsubmit="checkform(event)">
+    <table class="candypaint">
+        <tr>
+            <td>
+                <div class="kwdi">
+                    <label for="keyword"><h1 class="header">Keywords<span style=" color:red;">*</span>:</h1></label>
+                </div>
+                <div class="kwdi">
+                    <input type="text" id="keyword" required>
+                </div>
+            </td>
+        </tr>
+        <tr class="candypaint_row">
+            <td>
+                <div class="price_range">
+                    <h1 class="header">Price range:</h1>
+                </div>
+                <div class="price_range">
+                    <h1 class="header">From:</h1>
+                </div>
+                <div class="price_range">
+                    <input type="number" name="price_from" id="price_from_id" class="inp_width">
+                </div>
+                <div class="price_range">
+                    <h1 class="header">To:</h1>
+                </div>
+                <div class="price_range">
+                    <input type="number" name="price_to" id="price_to_id" class="inp_width">
+                </div>
+            </td>
+        </tr>
+        <tr class="candypaint_row">
+            <td>
+                <div class="condition">
+                    <h1 class="header">Condition:</h1>
+                </div>
+                <div class="condition">
+                    <input type="checkbox" name="new" id="new_id">
+                    <label for="new_id">New</label>
+                    <input type="checkbox" name="used" id="used_id">
+                    <label for="used_id">Used</label>
+                    <input type="checkbox" name="very_good" id="very_good_id">
+                    <label for="very_good_id">Very Good</label>
+                    <input type="checkbox" name="good" id="good_id">
+                    <label for="good_id">Good</label>
+                    <input type="checkbox" name="acceptable" id="acceptable_id">
+                    <label for="acceptable_id">Acceptable</label>
+                </div>
+            </td>
+        </tr>
+        <tr class="candypaint_row">
+            <td class="column_accepted">
+                <div class="return_accepted">
+                    <h1 class="header">Seller :</h1>
+                </div>
+                <div class="return_accepted">
+                    <input type="checkbox" namew="return" id="return_id">
+                </div>
+                <div class="return_accepted">
+                    <label for="return_id">Return Accepted</label>
+                </div>
+            </td>
+        </tr>
+        <tr class="candypaint_row">
+            <td>
+                <div class="Sipping">
+                    <h1 class="header">Shipping :</h1>
+                </div>
+                <div class="Sipping">
+                    <input type="checkbox" name="free" id="free_id">
+                </div>
+                <div class="Sipping">
+                    <label for="free_id">Free</label>
+                </div>
+                <div class="Sipping">
+                    <input type="checkbox" name="expedited" id="expedited_id">
+                </div>
+                <div class="Sipping">
+                    <label for="expedited_id">Expedited</label>
+                </div>
+            </td>
+        </tr>
+        <tr class="candypaint_row">
+            <td>
+            <div class="Sipping">
+                <h1 class="header">Sort By:</h1>
+            </div>
+            <div class="Sipping">
+                <select name="sel" id="sel_id">
+                    <option value="BestMatch">Best Match</option>
+                    <option value="CurrentPriceHighest">Current Price Highest</option>
+                    <option value="PricePlusShippingHighest">Price Plus Shipping Highest</option>
+                    <option value="PricePlusShippingLowest">Price Plus Shipping Lowest</option>
+                </select>
+            </div>
+            </td>
+        </tr>
+        <tr class="candypaint_row">
+            <td>
+                <div class="Sipping">
+                    <input type="button" value="Clear" onclick="clearFunction()"
+                    onmouseover="make_clear_green()" 
+                    onmouseout="make_clear_white()"
+                    id="clear_button">
+                </div>
+                <div class="Sipping">
+                    <input type="submit" value="Search" id="search_button"
+                    onmouseover="make_search_green()"
+                    onmouseout="make_search_white()">
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+<br>
+<br>
+<hr>
+<br>
+<br>
+<div class="result" id="result_container">
+</div>
+</body>
+    
+<script type="text/javascript">
+
+    const check_box_form =  document.getElementById("form_id");
+    till = 0;
+    number_of_items_in_total = 0;
+    endcount = 0;
+    current_json_response = {};
+    var some_var = 0;
+    
+    function clearFunction(){
+        document.getElementById("keyword").value = '';
+        document.getElementById("price_from_id").value = '';
+        document.getElementById("price_to_id").value = '';
+        document.getElementById("new_id").checked = false;
+        document.getElementById("used_id").checked = false;
+        document.getElementById("very_good_id").checked = false;
+        document.getElementById("good_id").checked = false;
+        document.getElementById("acceptable_id").checked = false;
+        document.getElementById("return_id").checked = false;
+        document.getElementById("free_id").checked = false;
+        document.getElementById("expedited_id").checked = false;
+    }
+    function make_clear_green(){
+        document.getElementById("clear_button").style.background  = "#00AB02";
+        document.getElementById("clear_button").style.color = "#FFFFFF";
+    
+    }
+    function make_clear_white(){
+        document.getElementById("clear_button").style.background = "#FFFFFF";
+        document.getElementById("clear_button").style.color = "#000000";
+    }
+    function make_stuff_green(){
+        document.getElementById("lessbutton").style.background  = "#00AB02";
+        document.getElementById("lessbutton").style.color = "#FFFFFF";
+        document.getElementById("lessbutton").style.textDecoration = "underline #00AB02"; 
+        document.getElementById("showbutton").style.background  = "#00AB02";
+        document.getElementById("showbutton").style.color = "#FFFFFF";
+        document.getElementById("showbutton").style.textDecoration = "underline #00AB02";
+    }
+    function make_stuff_white(){
+        document.getElementById("lessbutton").style.background = "#FFFFFF";
+        document.getElementById("lessbutton").style.color = "#000000";
+        document.getElementById("lessbutton").style.textDecoration = "underline #FFFFFF"; 
+        document.getElementById("showbutton").style.background = "#FFFFFF";
+        document.getElementById("showbutton").style.color = "#000000";
+        document.getElementById("showbutton").style.textDecoration = "underline #FFFFFF"; 
+    }
+    
+    function make_search_green(){
+        document.getElementById("search_button").style.background  = "#00AB02";
+        document.getElementById("search_button").style.color = "#FFFFFF";
+    }
+    function make_search_white(){
+        document.getElementById("search_button").style.background = "#FFFFFF";
+        document.getElementById("search_button").style.color = "#000000";
+    }
+    /*
+    -=======================================----------------==============-----------------------
+    */
+    function show_more_stuff(){
+        try{
+            for(var i=3;i<=10;i++){
+                document.getElementById(i).style.display = "block";
+            }
+        }
+        catch(err){
+            document.getElementById("showbutton").style.display = "none";   
+            document.getElementById("lessbutton").style.display = "block";   
+        }
+    }
+    
+    function show_less_stuff(){
+        try{
+            for(var i=3;i<=10;i++){
+                document.getElementById(i).style.display = "none";
+            }
+        }
+        catch(err){
+            document.getElementById("showbutton").style.display = "block";   
+            document.getElementById("lessbutton").style.display = "none";   
+        }
+    }
+    /*
+    -=======================================----------------==============-----------------------
+    */
+    
+    function rev_stuff(id){
+    
+        
+        var border_box = document.getElementById(id);
+        var product_image = document.getElementById(id).getElementsByClassName("product_image")[0];
+        var target_floater = document.getElementById(id).getElementsByClassName("floater")[0];
+        var target_returns = document.getElementById(id).getElementsByClassName("returns")[0];
+        var target_shipping_cost = document.getElementById(id).getElementsByClassName("shipping")[0];
+        var target_shipping_location = document.getElementById(id).getElementsByClassName("whygodwhy")[0];
+        
+        if(some_var==0){
+        target_floater.style.display = "block";
+        target_returns.style.display = "block";
+        target_shipping_cost.style.display = "block";
+        target_shipping_location.style.display = "inline";   
+        border_box.style.height = "200px";
+        product_image.style = "margin-top:50px";
+        some_var = 1;
+        }
+        else{
+            some_var = 0;
+            target_floater.style.display = "none";
+            target_returns.style.display = "none";
+            target_shipping_cost.style.display = "none";
+            target_shipping_location.style.display = "none";   
+            border_box.style.height = "120px";
+            product_image.style = "margin-top:10px";
+            
+        }
+    }
+    
+    /*
+    -=======================================----------------==============-----------------------
+    */
+    
+    function checkform(event){
+        /* EVALS FOR ACCEPTING FORM */
+        if(String(document.getElementById('price_from_id').value)!="" && String(document.getElementById('price_to_id').value)!="")
+        {
+        event.preventDefault();
+        price_from = parseInt(document.getElementById("price_from_id").value);
+        price_to  = parseInt(document.getElementById("price_to_id").value);
+    
+        if(price_from <= 0){
+            document.getElementById("price_from_id").value = "";
+            alert("Please Enter a Price Range greater than 0")
+            return false;
+        }
+    
+        if(price_to <= 0){
+            document.getElementById("price_to_id").value = "";
+            alert("Please Enter a Price Range greater than 0")
+            return false;
+        }
+        if(price_from > price_to){
+            
+            document.getElementById("price_from_id").value = "";
+            document.getElementById("price_to_id").value = "";
+            alert("Range cannot go from higher number to a lower number")
+            return false;
+        }
+        keyword = String(document.getElementById("keyword").value)
+        new_value = document.getElementById("new_id").checked;
+        used_value = document.getElementById("used_id").checked;
+        very_good_value = document.getElementById("very_good_id").checked;
+        good_value = document.getElementById("good_id").checked;
+        acceptable_value = document.getElementById("acceptable_id");
+        return_value  = document.getElementById("return_id").checked;
+        return_accepted_value  = document.getElementById("return_id").checked;
+        free_value  = document.getElementById("free_id").checked;
+        expedited_value = document.getElementById("expedited_id").checked;
+        sel_value = document.getElementById("sel_id").value;
+        
+        var jsonDoc;
+        let url = "";
+        url += "&keywords=" + keyword
+        url += "&itemFilter(0).name=MinPrice&itemFilter(0).value=" + String(price_from) + "&itemFilter(1).name=MaxPrice&itemFilter(1).value=" + String(price_to);
+        filter = 2;
+        next_filter = 2;
+        val = 0;
+        if(new_value==true || used_value==true || very_good_value==true || good_value==true || acceptable_value==true){
+            //console.log("DETECTED CONDITION");
+            url += "&itemFilter(" + String(filter) + ").name=Condition"
+            next_filter = filter + 1
+        } 
+        
+        if(new_value==true){
+            url += "&itemFilter(" + String(filter) + ").value(" + String(val) +")=1000";
+            val += 1;
+        }
+        if(used_value==true){
+            url += "&itemFilter(" + String(filter) + ").value(" + String(val) +")=3000";
+            val += 1;
+        }
+        if(very_good_value==true){
+            url += "&itemFilter(" + String(filter) + ").value(" + String(val) +")=4000";
+            val += 1;
+        }
+        if(good_value==true){
+            url += "&itemFilter(" + String(filter) + ").value(" + String(val) +")=5000";
+            val += 1;
+        }
+        if(acceptable_value==true){
+            url += "&itemFilter(" + String(filter) + ").value(" + String(val) +")=6000";
+            val += 1;
+        }
+        
+        filter = next_filter;
+        if(return_accepted_value==true){
+            url += "&itemFilter("+ String(filter) + ").name= ReturnsAcceptedOnly&itemFilter(" + String(filter) + ").value=" + String(return_accepted_value);
+            next_filter += 1;
+        }
+        filter = next_filter;
+        if(free_value==true){
+            url += "&itemFilter("+ String(filter) + ").name=FreeShippingOnly&itemFilter(" + String(filter) + ").value=" + String(free_value);
+            next_filter += 1;
+        }
+    
+        filter = next_filter;
+        if(expedited_value==true){
+            url += "&itemFilter("+ String(filter) + ").name=ExpeditedShippingType&itemFilter(" +String(filter)+").value=Expedited";
+            next_filter += 1;
+        }
+        url += "&sortOrder=" + sel_value;    
+        //let url = "https://armada27.uc.r.appspot.com/" + String();
+        var xmlhttp=new XMLHttpRequest();
+        //http://127.0.0.1:8001
+        xmlhttp.open("GET","https://armada27.uc.r.appspot.com/" + url,false); //open, send, responseText are
+        xmlhttp.send(); //properties of XMLHTTPRequest
+        val = xmlhttp.responseText;
+        //console.log(val);
+        current_json_response = JSON.parse(val);
+        try{    
+        number_of_items = current_json_response['findItemsAdvancedResponse'][0]['paginationOutput'][0]['totalEntries'][0];    
+        number_of_items = parseInt(number_of_items);
+        }
+        catch(err){
+            number_of_items = 0;
+        }
+        window.number_of_items_in_total = number_of_items;
+        //console.log("æææ NUMBER OF ITEMS : "+ String(number_of_items));
+        if(number_of_items == 0){
+            document.getElementById('result_container').innerHTML = "<div class=\"senpai\"> No Items Found </div>";
+        }
+        else{
+            display_items_start = 0;
+            display_items_end = 10;
+    
+            number_of_items_block = "<div> \
+                                    <h1 id=\"number_of_items\">"+ String(number_of_items)+" Results found for " + keyword + "</h1> \
+                                </div>";
+        
+            var endcount = 10;
+    
+            if(number_of_items<10){
+                endcount = number_of_items;
+            }
+        div_block = "";
+        for (var i = 0; i<endcount;i++) {
+            // itemId = current_json_response['findItemsAdvancedResponse'][0]['searchResult'][0]['item'][i]['itemId'][0] + parseInt(Math.random()*100);
+            itemId  = i;
+            item_category = current_json_response['findItemsAdvancedResponse'][0]['searchResult'][0]['item'][i]['primaryCategory'][0]['categoryName'][0];
+            item_img = current_json_response['findItemsAdvancedResponse'][0]['searchResult'][0]['item'][i]['galleryURL'][0]; 
+            console.log(item_img);
+            item_title = current_json_response['findItemsAdvancedResponse'][0]['searchResult'][0]['item'][i]['title'][0];
+            item_link = current_json_response['findItemsAdvancedResponse'][0]['searchResult'][0]['item'][i]['viewItemURL'][0];
+            item_condition = current_json_response['findItemsAdvancedResponse'][0]['searchResult'][0]['item'][i]['condition'][0]['conditionDisplayName'][0];
+            item_top_rated = current_json_response['findItemsAdvancedResponse'][0]['searchResult'][0]['item'][i]['topRatedListing'][0];
+            item_accepts_return = current_json_response['findItemsAdvancedResponse'][0]['searchResult'][0]['item'][i]['returnsAccepted'][0];
+            try{
+            item_shipping_cost = parseInt(current_json_response['findItemsAdvancedResponse'][0]['searchResult'][0]['item'][i]['shippingInfo'][0]['shippingServiceCost'][0]['__value__']);
+            }
+            catch(err){
+                item_shipping_cost = 0;
+            }
+            item_expedited_shipping = current_json_response['findItemsAdvancedResponse'][0]['searchResult'][0]['item'][i]['shippingInfo'][0]['expeditedShipping'][0];
+            item_price = current_json_response['findItemsAdvancedResponse'][0]['searchResult'][0]['item'][i]['sellingStatus'][0]['convertedCurrentPrice'][0]['__value__'];
+            item_shipping_location = current_json_response['findItemsAdvancedResponse'][0]['searchResult'][0]['item'][i]['location'][0];
+            
+            div_block += "" +
+                "<div class=\"borderbox\" id=\"" + String(itemId) + "\" onclick=\"rev_stuff(this.id)\">";
+                div_block += 
+            
+                //FLOATER
+                "<div class=\"floater\">"+
+                "<h1 class=\"nom\" style="color:red">XD</h1>" +
+                "</div>";
+    
+                //PRODUCT IMAGE
+                div_block += 
+                "<div class=\"lefthalf\"><img src=\""+ String(item_img)+ "\" alt=\"product image\"" + 
+                "class=\"product_image\">" +
+                "</div>";
+    
+                div_block +=
+    
+                "<div class=\"informationbox\">";
+    
+                div_block +=    
+    
+                    //TITLE
+                    "<div class=\"product_title\"><a href=\"" + String(item_link) +"\">" + item_title +"</a></div>";
+    
+                    //CATEGORY
+                    div_block += 
+    
+                    "<div class=\"category\">Category : " + String(item_category) +
+                    "<a href=\"" + String(item_link) +"\">"+
+                        "<img src=\"./resources/images/redirect.png\" class=\"image_redirect\"/>"+
+                    "</a>"+
+                    "</div>";
+                
+                    //CONDITION
+                    div_block += 
+    
+                    "<div class=\"condition_pls\"> Condition : " + String(item_condition);
+                    if(item_top_rated=="true"){
+                        div_block += 
+                            "<img src=\"./resources/images/topRatedImage.png\" class=\"someImage\"/>"; 
+                        } 
+                    div_block += "</div>"
+    
+                    //RETURNS
+                    div_block +=
+    
+                    "<div class =\"returns\" >";
+    
+                    if(return_accepted_value==true){
+                        div_block += " Seller <b>accepts</b> returns ";
+                    }
+                    else{
+                        div_block += " Seller <b>does not accept</b> returns ";
+                    }
+                    
+                    div_block +="</div>";
+                    
+                    //SHIPPING
+                    
+                    //console.log(item_shipping_cost);
+                    div_block += 
+                    "<div class =\"shipping\">";
+                    if(item_shipping_cost==0 && item_expedited_shipping=="true"){
+                        div_block += "Free Shipping--Expedited Shipping";
+                    }
+                    else if(item_shipping_cost==0){
+                        div_block += "Free Shipping--Expedited Shipping";
+                    }
+                    else if(item_expedited_shipping=="true"){
+                        div_block += "Expedited Shipping";
+                    }
+                    else{
+                        div_block += "Shipping Cost : $" + item_shipping_cost;
+                    }
+                    div_block += "</div>";
+                    
+                    div_block += "<div class=\"price\"><span class=\"whydoIexist\">Price : $" + String(item_price);
+                    if(item_shipping_cost>0){
+                        div_block += "(+" + item_shipping_cost + " for shipping)</span>";
+                    }
+                div_block += "<span class=\"whygodwhy\"> From " + String(item_shipping_location) + "</span>";
+                div_block += "</div>";
+                div_block += "</div></div>";
+                }
+            display_items_start = 3;
+                if (window.number_of_items_in_total>display_items_start)
+                { 
+                div_block += "<div class=\"div_show_more\">"+ 
+                            "<a href=\"#lessbutton\"><button  class=\"SHOW_MORE\" id=\"showbutton\" onclick=show_more_stuff() onmouseover=\"make_stuff_green()\" onmouseout=\"make_stuff_white()\" >Show More</button></a></div>";
+                div_block += "<div class=\"div_show_more\">"+ 
+                "<a href=\"#showbutton\"><button  class=\"SHOW_MORE\" id=\"lessbutton\" onclick=show_less_stuff() onmouseover=\"make_stuff_green()\" onmouseout=\"make_stuff_white()\" >Show Less</button></a></div>";
+                }
+            
+        document.getElementById('result_container').innerHTML = number_of_items_block + div_block;
+        for(var i=display_items_start;i<endcount;i++){
+            document.getElementById(i).style.display = "none";
+        }
+        document.getElementById('lessbutton').style.display = "none";
+        }    
+        }
+        else{
+            alert("FILL THE PRICE FIELDS");
+        }
+    }
+    
+        
+        </script>
+</html>

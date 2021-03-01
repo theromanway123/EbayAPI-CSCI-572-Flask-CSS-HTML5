@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./resources/css/index.css">
+    <script src="./index.js"></script>
+</head>
+<body>
+    
+    <table class="tabletop" id="para">
+        <tr>
+            <th><a href="https://www.ebay.com/"><img src="./resources/images/eBayLogo.png" alt="" class="ebay_logo"></a></th>
+            <th><h1 class="shop">Shopping</h1></td>
+        </tr>
+    </table>
+
+    <form id="form_id" onsubmit="checkform(event)">
+    <table class="candypaint">
+        <tr>
+            <td>
+                <div class="kwdi">
+                    <label for="keyword"><h1 class="header">Keywords<span style=" color:red;">*</span>:</h1></label>
+                </div>
+                <div class="kwdi">
+                    <input type="text" id="keyword" required>
+                </div>
+            </td>
+        </tr>
+        <tr class="candypaint_row">
+            <td>
+                <div class="price_range">
+                    <h1 class="header">Price range:</h1>
+                </div>
+                <div class="price_range">
+                    <h1 class="header">From:</h1>
+                </div>
+                <div class="price_range">
+                    <input type="number" name="price_from" id="price_from_id" class="inp_width">
+                </div>
+                <div class="price_range">
+                    <h1 class="header">To:</h1>
+                </div>
+                <div class="price_range">
+                    <input type="number" name="price_to" id="price_to_id" class="inp_width">
+                </div>
+            </td>
+        </tr>
+        <tr class="candypaint_row">
+            <td>
+                <div class="condition">
+                    <h1 class="header">Condition:</h1>
+                </div>
+                <div class="condition">
+                    <input type="checkbox" name="new" id="new_id">
+                    <label for="new_id">New</label>
+                    <input type="checkbox" name="used" id="used_id">
+                    <label for="used_id">Used</label>
+                    <input type="checkbox" name="very_good" id="very_good_id">
+                    <label for="very_good_id">Very Good</label>
+                    <input type="checkbox" name="good" id="good_id">
+                    <label for="good_id">Good</label>
+                    <input type="checkbox" name="acceptable" id="acceptable_id">
+                    <label for="acceptable_id">Acceptable</label>
+                </div>
+            </td>
+        </tr>
+        <tr class="candypaint_row">
+            <td class="column_accepted">
+                <div class="return_accepted">
+                    <h1 class="header">Seller :</h1>
+                </div>
+                <div class="return_accepted">
+                    <input type="checkbox" namew="return" id="return_id">
+                </div>
+                <div class="return_accepted">
+                    <label for="return_id">Return Accepted</label>
+                </div>
+            </td>
+        </tr>
+        <tr class="candypaint_row">
+            <td>
+                <div class="Sipping">
+                    <h1 class="header">Shipping :</h1>
+                </div>
+                <div class="Sipping">
+                    <input type="checkbox" name="free" id="free_id">
+                </div>
+                <div class="Sipping">
+                    <label for="free_id">Free</label>
+                </div>
+                <div class="Sipping">
+                    <input type="checkbox" name="expedited" id="expedited_id">
+                </div>
+                <div class="Sipping">
+                    <label for="expedited_id">Expedited</label>
+                </div>
+            </td>
+        </tr>
+        <tr class="candypaint_row">
+            <td>
+            <div class="Sipping">
+                <h1 class="header">Sort By:</h1>
+            </div>
+            <div class="Sipping">
+                <select name="sel" id="sel_id">
+                    <option value="BestMatch">Best Match</option>
+                    <option value="CurrentPriceHighest">Current Price Highest</option>
+                    <option value="PricePlusShippingHighest">Price Plus Shipping Highest</option>
+                    <option value="PricePlusShippingLowest">Price Plus Shipping Lowest</option>
+                </select>
+            </div>
+            </td>
+        </tr>
+        <tr class="candypaint_row">
+            <td>
+                <div class="Sipping">
+                    <input type="button" value="Clear" onclick="clearFunction()"
+                    onmouseover="make_clear_green()" 
+                    onmouseout="make_clear_white()"
+                    id="clear_button">
+                </div>
+                <div class="Sipping">
+                    <input type="submit" value="Search" id="search_button"
+                    onmouseover="make_search_green()"
+                    onmouseout="make_search_white()">
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+<br>
+<br>
+<hr>
+<br>
+<br>
+<div class="result" id="result_container">
+</div>
+</body>
+</html>
